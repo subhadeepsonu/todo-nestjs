@@ -9,5 +9,5 @@ export class LoginDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    password: String
+    password: string
 }

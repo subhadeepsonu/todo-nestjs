@@ -12,5 +12,5 @@ export class RegisterDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    password: String
+    password: string
 }
