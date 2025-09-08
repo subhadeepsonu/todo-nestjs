@@ -6,10 +6,9 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Todo')
+    .setDescription('The todo API description')
     .setVersion('1.0')
-    .addTag('cats')
     .addSecurity('bearer', {
       type: 'http',
       scheme: 'bearer',
@@ -27,4 +26,5 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, documentFactory);
   await app.listen(process.env.PORT ?? 3001);
 }
+
 bootstrap();

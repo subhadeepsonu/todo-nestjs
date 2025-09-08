@@ -7,7 +7,6 @@ import { AuthService } from './auth.service';
 @Controller('auth')
 export class AuthController {
     constructor(readonly authService: AuthService) {
-
     }
     @Post("login")
     async login(@Body() login: LoginDto) {
@@ -20,7 +19,7 @@ export class AuthController {
             throw new UnauthorizedException("Incorrect password")
         }
         const token = this.authService.generateToken(user.id)
-        
+
         return {
             status: 'success',
             data: {

@@ -1,17 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { Todo } from './todo.interface';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Todo } from './todo.interface';
 @Injectable()
 export class TodoService {
-    private readonly todos: Todo[] = []
     constructor(private prisma: PrismaService) { }
-    getTodos(): Todo[] {
-        return this.todos;
-    }
-    createTodo(todo: Todo): Todo {
-        this.todos.push({
-            ...todo
+    async getTodos(id: string) {
+        const todos = await this.prisma.todo.findMany({
+            where: {
+                userId: id
+            }
         })
-        return todo
+        return todos
+    }
+    async createTodo(todo: Todo, id: string) {
+        const createTodo = await this.prisma.todo.create({
+            data: {
+                name: todo.name,
+                description: todo.description,
+                userId: id,
+            }
+        })
+        return createTodo
     }
 }

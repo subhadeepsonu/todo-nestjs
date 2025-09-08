@@ -14,10 +14,9 @@ export class AuthGaurdGuard implements CanActivate {
     }
 
     const token = authHeader.split(' ')[1];
-    //need to get from .env
     try {
       const payload = jwt.verify(token, 'secret');
-      request.user = payload;
+      request.userId = payload;
     } catch (error) {
       throw new UnauthorizedException('Invalid or expired token');
     }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiSecurity } from '@nestjs/swagger';
 import { AuthGaurdGuard } from 'src/auth-gaurd/auth-gaurd.guard';
 import { TodoService } from './todo.service';
@@ -12,12 +12,16 @@ export class TodoController {
 
     }
     @Get()
-    getTodo() {
-        return this.todoService.getTodos()
+    async getTodo(@Req() req) {
+        const userId = req.userId
+        const todos = await this.todoService.getTodos(userId)
+        return todos
     }
 
     @Post()
-    createTodo(@Body() todo: createTodoDto) {
-        return this.todoService.createTodo(todo)
+    async createTodo(@Body() todo: createTodoDto, @Req() req) {
+        const userId = req.userId
+        const newTodo = await this.todoService.createTodo(todo, userId)
+        return newTodo
     }
 }
